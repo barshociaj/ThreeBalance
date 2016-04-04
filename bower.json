@@ -1,0 +1,7 @@
+{
+  "name": "Three Balance",
+  "private": "true",
+  "devDependencies": {
+    "ionic": "driftyco/ionic-bower#1.2.4"
+  }
+}
