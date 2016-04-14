@@ -507,13 +507,16 @@ angular.module('starter.services', [])
      */
     var cost = function(n,d){
       var free = ["b","333","444","555","999","112","111","116000","116006","116111","116117","116123","e"];
-      var tar1 = ["b","0800","0500","0808","e"];
+      var tar1 = ["b","0500","e"];
       var tar2 = ["b","0845","0870","e"];
       var tar3 = ["b","0843","0844","0871","0872","e"];
       var tar4 = ["b","05","e"];
       var tar5 = ["b","082","e"];
       var tar6 = ["b","01","02","07","e"];
       var tar7 = ["b","070","076","090","091","098","e"];
+      var tar8 = ["b","084","e"];
+      var tar9 = ["b","087","e"];
+      var tar10 = ["b","0800","0808","e"];
       if (free.join(',').indexOf(","+n+",") > 0) return 0;
       if (tar1.join(',').indexOf(","+n.substring(0,4)+",") > 0) return Math.ceil(d/60)*15.3;
       if (tar2.join(',').indexOf(","+n.substring(0,4)+",") > 0) return Math.ceil(d/60)*35;
@@ -521,7 +524,12 @@ angular.module('starter.services', [])
       if (tar4.join(',').indexOf(","+n.substring(0,2)+",") > 0) return Math.ceil(d/60)*15.3;
       if (tar5.join(',').indexOf(","+n.substring(0,3)+",") > 0) return Math.ceil(d/60)*15.3;
       if (tar6.join(',').indexOf(","+n.substring(0,2)+",") > 0) return Math.ceil(d/60)*3;
-      if (tar7.join(',').indexOf(","+n.substring(0,3)+",") > 0) return Math.ceil(d/60)*236;//worst case scenario
+      if (tar7.join(',').indexOf(","+n.substring(0,3)+",") > 0) return Math.ceil(d/60)*236; //worst case scenario
+      if (tar8.join(',').indexOf(","+n.substring(0,3)+",") > 0) return 45 + Math.ceil(d/60)*7; //worst case scenario
+      if (tar9.join(',').indexOf(","+n.substring(0,3)+",") > 0) return 45 + Math.ceil(d/60)*13; //worst case scenario
+      if (tar10.join(',').indexOf(","+n.substring(0,4)+",") > 0) return 0;
+      if (n == "101") return 15;
+      if (n.substring(0,1) == "+" || n.substring(0,2) == "00") return Math.ceil(d/60)*46; //international call most probable scenario
       return false;
     }
 
@@ -550,11 +558,17 @@ angular.module('starter.services', [])
      * Text abroad: 25.2p
      */
 
+    var cost = function(n){
+      if (n.substring(0,1) == "+" || n.substring(0,2) == "00") return 25.2; //international sms most probable scenario
+      return 2;
+    }
+
     angular.forEach(rows, function(row, key) {
       n = row.address;
       n = n.replace(/^\+44/,"0").replace(/^0044/,"0");
+      row.address = n;
 
-      row.cost = 2;
+      row.cost = cost(n);
 
       if (row.cost === false) row.cost = "";
       else row.cost = "£" + (row.cost/100).toFixed(2);

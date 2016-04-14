@@ -120,7 +120,8 @@
       </div>
     </div>
 
-    <div class="item item-icon-left item-icon-right item-stable" ng-click="toggleGroup('data')" ng-class="{active: isGroupShown('data')}" ng-show="settings.experimental && logs">
+    <div class="item item-icon-left item-icon-right item-stable" ng-click="toggleGroup('data')" ng-class="{active: isGroupShown('data')}"
+     ng-show="settings.experimental && logs && logData && logData.mb > 0">
       <i class="icon ion-connection-bars" ></i>
       Data usage {{myNumber}}
       <i class="icon" side="right" ng-class="isGroupShown('data') ? 'ion-minus' : 'ion-plus'"></i>
@@ -136,7 +137,7 @@
         <div class="col col-20">£*</div>
       </div>
       <div class="row">
-        <div class="col col-43">Since {{prettyUpTime(logData.uptimeMillis)}}</div>
+        <div class="col col-43">Since {{prettyUpTime(logData.elapsedRealtime)}}</div>
         <div class="col col-43">{{logData.mb}} MB</div>
         <div class="col col-20">{{logData.cost}}</div>
       </div>
