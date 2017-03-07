@@ -230,6 +230,9 @@ angular.module('starter.controllers', [])
   }
 })
 
+.controller('PrivacyCtrl', function($scope) {
+})
+
 .controller('LoginCtrl', function($rootScope, $scope, $state, $ionicLoading, Phones, ThreeWS) {
   $scope.message = "";
   $scope.user = {

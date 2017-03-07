@@ -1,6 +1,6 @@
 {
   "name": "threebalance",
-  "version": "1.1.1",
+  "version": "4.0.0",
   "description": "ThreeBalance: An Ionic project",
   "dependencies": {
     "gulp": "^3.5.6",
