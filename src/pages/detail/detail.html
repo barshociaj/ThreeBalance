@@ -1,0 +1,171 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{phone.user}}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="remove()">
+        <ion-icon name="trash"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="{{NLS.pullingText}}"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <p class="subdued" style="color:gray">
+    {{message}} <a (click)="signInClicked()" [hidden]="!messageSignIn" href>sign in</a> <span [hidden]="!messageSignIn">{{messageSignIn}}</span> <span style="color:lightgray" [hidden]="!settings.debug">{{debugMessage}}</span>
+  </p>
+
+  <ion-list>
+
+    <ion-item [hidden]="phone.values.credit.total==''" (click)="toggleGroup('credit')" [ngClass]="{active: isGroupShown('credit')}">
+      <h2>
+        <ion-icon name="cash"></ion-icon> {{phone.values.credit.total}} credit
+        <ion-icon color="success" item-right [name]="isGroupShown('credit') ? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
+      </h2>
+      <div *ngIf="isGroupShown('credit')">
+        <div class="row">
+          <div class="col" *ngFor="let heading of phone.values.credit.headings">{{heading}}</div>
+        </div>
+        <div class="row" *ngFor="let row of phone.values.credit.rows">
+          <div class="col" *ngFor="let col of row">{{col}}</div>
+        </div>
+      </div>
+    </ion-item>
+
+
+    <ion-item [hidden]="phone.values.mins.total==''" (click)="toggleGroup('mins')" [ngClass]="{active: isGroupShown('mins')}">
+      <h2>
+        <ion-icon name="timer"></ion-icon> {{phone.values.mins.total}} minutes
+        <ion-icon color="success" item-right [name]="isGroupShown('mins') ? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
+      </h2>
+      <div *ngIf="isGroupShown('mins')">
+        <div class="row">
+          <div class="col" *ngFor="let heading of phone.values.mins.headings">{{heading}}</div>
+        </div>
+        <div class="row" *ngFor="let row of phone.values.mins.rows">
+          <div class="col" *ngFor="let col of row">{{col}}</div>
+        </div>
+      </div>
+    </ion-item>
+
+
+    <ion-item [hidden]="phone.values.texts.total==''" (click)="toggleGroup('texts')" [ngClass]="{active: isGroupShown('texts')}">
+      <h2>
+        <ion-icon name="text"></ion-icon> {{phone.values.texts.total}} texts
+        <ion-icon color="success" item-right [name]="isGroupShown('texts') ? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
+      </h2>
+      <div *ngIf="isGroupShown('texts')">
+        <div class="row">
+          <div class="col" *ngFor="let heading of phone.values.texts.headings">{{heading}}</div>
+        </div>
+        <div class="row" *ngFor="let row of phone.values.texts.rows">
+          <div class="col" *ngFor="let col of row">{{col}}</div>
+        </div>
+      </div>
+    </ion-item>
+
+
+    <ion-item [hidden]="phone.values.mb.total==''" (click)="toggleGroup('mb')" [ngClass]="{active: isGroupShown('mb')}">
+      <h2>
+        <ion-icon name="download"></ion-icon> {{phone.values.mb.total}} MB
+        <ion-icon color="success" item-right [name]="isGroupShown('mb') ? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
+      </h2>
+      <div *ngIf="isGroupShown('mb')">
+        <div class="row">
+          <div class="col" *ngFor="let heading of phone.values.mb.headings">{{heading}}</div>
+        </div>
+        <div class="row" *ngFor="let row of phone.values.mb.rows">
+          <div class="col" *ngFor="let col of row">{{col}}</div>
+        </div>
+      </div>
+    </ion-item>
+
+
+    <ion-item [hidden]="!settings.experimental || logs.length == 0" (click)="toggleGroup('calls')" [ngClass]="{active: isGroupShown('calls')}" text-wrap>
+      <h2>
+        Call logs {{myNumber}}
+        <ion-icon color="success" item-right [name]="isGroupShown('calls') ? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
+      </h2>
+      <div *ngIf="isGroupShown('calls')">
+        <p class="subdued">
+          * {{NLS.callLogNote}}
+        </p>
+        <div class="row">
+          <div class="col col-33"><ion-icon name="time"></ion-icon></div>
+          <div class="col col-33"><ion-icon name="call"></ion-icon></div>
+          <div class="col col-20"><ion-icon name="timer"></ion-icon></div>
+          <div class="col col-20">£*</div>
+        </div>
+        <div class="row" *ngFor="let log of logs">
+          <div class="col col-33">{{log.date | date:'MMM d h:mm:ss a'}}</div>
+          <div class="col col-33">{{log.number}}</div>
+          <div class="col col-20">{{log.duration}}s</div>
+          <div class="col col-20">{{log.cost}}</div>
+        </div>
+      </div>
+    </ion-item>
+
+
+    <ion-item [hidden]="!settings.experimental ||logsSms.length == 0" (click)="toggleGroup('messages')" [ngClass]="{active: isGroupShown('messages')}" text-wrap>
+      <h2>
+        SMS logs {{myNumber}}
+        <ion-icon color="success" item-right [name]="isGroupShown('messages') ? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
+      </h2>
+      <div *ngIf="isGroupShown('messages')">
+        <p class="subdued">
+          * {{NLS.smsLogNote}}
+        </p>
+        <div class="row">
+          <div class="col col-43"><ion-icon name="time"></ion-icon></div>
+          <div class="col col-43"><ion-icon name="text"></ion-icon></div>
+          <div class="col col-20">£*</div>
+        </div>
+        <div class="row" *ngFor="let logSms of logsSms">
+          <div class="col col-43">{{logSms.date | date:'MMM d h:mm:ss a'}}</div>
+          <div class="col col-43">{{logSms.address}}</div>
+          <div class="col col-20">{{logSms.cost}}</div>
+        </div>
+      </div>
+    </ion-item>
+
+
+    <ion-item [hidden]="!settings.experimental || !logData.elapsedRealtime" (click)="toggleGroup('data')" [ngClass]="{active: isGroupShown('data')}" text-wrap>
+      <h2>
+        Data usage {{myNumber}}
+        <ion-icon color="success" item-right [name]="isGroupShown('data') ? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
+      </h2>
+      <div *ngIf="isGroupShown('data')">
+        <p class="subdued">
+          * {{NLS.dataLogNote}}
+        </p>
+        <div class="row">
+          <div class="col col-43"><ion-icon name="time"></ion-icon></div>
+          <div class="col col-43"><ion-icon name="download"></ion-icon></div>
+          <div class="col col-20">£*</div>
+        </div>
+        <div class="row">
+          <div class="col col-43">Since {{prettyUpTime(logData.elapsedRealtime)}}</div>
+          <div class="col col-43">{{logData.mb}} MB</div>
+          <div class="col col-20">{{logData.cost}}</div>
+        </div>
+      </div>
+    </ion-item>
+
+
+  </ion-list>
+
+  <p class="subdued" style="text-align:right;color:gray;margin-right:5%">
+    {{NLS.lastupdated}} {{prettyDate(phone.lastupdated)}}
+  </p>
+
+</ion-content>
