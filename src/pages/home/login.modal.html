@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title><span [hidden]="!addingUser">Sign in to Three</span><span [hidden]="addingUser">Add a new number</span></ion-title>
+    <ion-buttons [hidden]="!allowCancel" end>
+      <button ion-button icon-only (click)="dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <form class="list">
+    <div>{{message}} <span style="color:lightgray" [hidden]="!settings.debug">{{debugMessage}}</span></div>
+    <ion-list>
+
+      <ion-item>
+        <ion-input type="tel" placeholder="07..." [(ngModel)]="user.username" name="Phone number" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input type="password" placeholder="Password" [(ngModel)]="user.password" name="Password" required></ion-input>
+      </ion-item>
+
+    </ion-list>
+    <div class="padding">
+      <button ion-button full (click)="loginClicked()">Login</button>
+    </div>
+  </form>
+
+
+  <p><a href="https://github.com/barshociaj/ThreeBalance/blob/master/PRIVACY_POLICY.md">Privacy policy</a> <ion-icon name="ios-browsers-outline"></ion-icon></p>
+
+</ion-content>
