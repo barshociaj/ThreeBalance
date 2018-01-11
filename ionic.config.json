@@ -1,0 +1,8 @@
+{
+  "name": "ThreeBalance",
+  "app_id": "051ab16f",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}

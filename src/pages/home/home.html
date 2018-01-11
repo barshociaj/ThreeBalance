@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>My Three Phone Numbers</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <!--
+  <ion-list>
+    <ion-item *ngFor="let phone of phones" type="item-text-wrap" (click)="viewPhone({{phone.id}})">
+      {{phone.user}}
+    </ion-item>
+  </ion-list>
+  <ion-list>
+    <ion-item ng-repeat="phone in phones track by phone.id" type="item-text-wrap" (click)="viewPhone({{phone.id}})">
+      {{phone.user}}
+    </ion-item>
+  </ion-list>
+-->
+<ion-list>
+  <button ion-item *ngFor="let phone of phonesprovider.phones" (click)="viewPhone(phone.id)">
+    {{phone.user}}
+  </button>
+</ion-list>
+
+  <p class="subdued" style="color:gray">
+    {{message}} <span style="color:lightgray" [hidden]="!settings.debug">{{debugMessage}}</span>
+  </p>
+</ion-content>
