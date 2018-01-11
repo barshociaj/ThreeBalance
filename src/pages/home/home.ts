@@ -5,10 +5,7 @@ import { LoginModal } from '../home/login.modal';
 import { PhonesProvider } from '../../providers/phones/phones';
 import { ThreewsProvider } from '../../providers/threews/threews';
 import { SettingsProvider } from '../../providers/settings/settings' ;
-<<<<<<< HEAD
 import { Platform } from 'ionic-angular';
-=======
->>>>>>> origin/master
 
 @Component({
   selector: 'page-home',
@@ -21,24 +18,16 @@ export class HomePage {
   settings: any;
   debugMessage: String;
 
-<<<<<<< HEAD
   constructor(platform: Platform, public navCtrl: NavController, public modalCtrl: ModalController,
-=======
-  constructor(public navCtrl: NavController, public modalCtrl: ModalController,
->>>>>>> origin/master
     public phonesprovider: PhonesProvider, public loadingCtrl: LoadingController,
     public threews: ThreewsProvider, public settingsprovider: SettingsProvider) {
 
     this.settings = this.settingsprovider.all();
-<<<<<<< HEAD
 
     platform.ready().then(() => {
       console.log('ready')
       this.load();
     });
-=======
-    this.load();
->>>>>>> origin/master
   }
 
   viewPhone(index){
