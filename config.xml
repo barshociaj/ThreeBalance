@@ -1,5 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
+<<<<<<< HEAD
 <widget android-versionCode="500003" id="barshociaj.ThreeBalance" version="5.0.3" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+=======
+<widget android-versionCode="500000" id="barshociaj.ThreeBalance" version="5.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+>>>>>>> origin/master
     <name>Three Balance</name>
     <description>Retrieves your Three PAYG balance (3-2-1) over an internet connection. Supports multiple numbers.</description>
     <author email="fromapps@asteri.sk" href="http://asteri.sk">Ondrej Lehota</author>

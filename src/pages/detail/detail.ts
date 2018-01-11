@@ -83,7 +83,11 @@ export class DetailPage {
         self.threews.getBalance(self.phone.seamless)
         .then(function(json) {
           console.log('Data received');
+<<<<<<< HEAD
           self.saveBalance(json, self);
+=======
+          self.saveBalance(json);
+>>>>>>> origin/master
           self.events.publish('scroll.refreshComplete', self.phone.user);
           loading.dismiss();
         }, function(error) {
@@ -124,10 +128,17 @@ export class DetailPage {
 
   }
 
+<<<<<<< HEAD
   saveBalance (json, self) {
     self.phone.values = json;
     self.phone.lastupdated = new Date().getTime();
     self.phonesprovider.put(self.phone.user, self.phone);
+=======
+  saveBalance (json) {
+    this.phone.values = json;
+    this.phone.lastupdated = new Date().getTime();
+    this.phonesprovider.put(this.phone.user, this.phone);
+>>>>>>> origin/master
   }
 
   remove () {
