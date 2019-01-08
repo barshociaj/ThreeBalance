@@ -6,8 +6,6 @@ If you want to retrieve your 3 balance over a connection other than mobile data 
 
 The Application retrieves your usage and allowance data from Three (3 UK) and also stores these in local cache.
 
-In addition the Application accesses the log of your phone calls and messages using built-in Android application interfaces. This information is used to display the log along with estimated prices to you in the experimental mode.
-
 ## Third parties
 The Application emulates browser connection between you and 3 (Three UK) servers. No information is exchanged with any other parties. Please note I am not affiliated with 3 in any way and have no control over how 3 uses your information.
 

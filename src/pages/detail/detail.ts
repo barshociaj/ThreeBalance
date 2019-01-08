@@ -3,7 +3,6 @@ import { NavController, NavParams, ModalController } from 'ionic-angular';
 import { SettingsProvider } from '../../providers/settings/settings' ;
 import { PhonesProvider } from '../../providers/phones/phones';
 import { ThreewsProvider } from '../../providers/threews/threews';
-import { CalllogProvider } from '../../providers/calllog/calllog';
 import { NlsProvider } from '../../providers/nls/nls';
 import { Events } from 'ionic-angular';
 import { LoadingController } from 'ionic-angular';
@@ -26,17 +25,13 @@ export class DetailPage {
   debugMessage: String;
   messageSignIn: String;
   NLS: any;
-  logs: Object;
-  logsSms: Object;
-  logData: Object;
-  myNumber: Object;
   groups: ['credit', 'mins', 'texts', 'mb', 'calls', 'messages', 'data'];
   shownGroup: String;
   loginModal: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public settingsprovider: SettingsProvider, public phonesprovider: PhonesProvider,
-    public threews: ThreewsProvider, public calllog: CalllogProvider,
+    public threews: ThreewsProvider,
     public events: Events, public loadingCtrl: LoadingController,
     public nlsprovider: NlsProvider, public modalCtrl: ModalController) {
 
@@ -46,10 +41,6 @@ export class DetailPage {
     this.debugMessage = "";
     this.messageSignIn = "";
     this.NLS = this.nlsprovider.en;
-    this.logs = [];
-    this.logsSms = [];
-    this.logData = {};
-    this.myNumber = null;
 
   }
 
@@ -108,19 +99,6 @@ export class DetailPage {
         self.events.publish('scroll.refreshComplete', self.phone.user);
         loading.dismiss();
       });
-
-      this.calllog.list().then(function(list){
-        self.logs = list;
-      })
-      this.calllog.listSms().then(function(list){
-        self.logsSms = list;
-      })
-      this.calllog.myNumber().then(function(myNumber){
-        self.myNumber = myNumber;
-      })
-      this.calllog.listData().then(function(logData){
-        self.logData = logData;
-      })
 
   }
 

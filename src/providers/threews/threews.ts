@@ -109,12 +109,20 @@ export class ThreewsProvider {
 
 
   login(credentials) {
-    var self = this, url;
+    var self = this;
+    var url;
+
     return new Promise(function(resolve, reject) {
+
+      //clear session first
+      self.http.clearCookies();
+      self.http.acceptAllCerts(true);
+      self.http.setRequestTimeout(30);
 
       if (!credentials.password && credentials.seamless) {
         url = "http://mobile.three.co.uk/sce/portal/my3/myDetails/contactDetails/";
         //var url = "3seamless.html";
+
         console.log('Seamless - getting ' + url)
         self.http.get(url, {}, self.headers)
           .then(response => {
@@ -135,15 +143,10 @@ export class ThreewsProvider {
           });
 
       } else {
-        //clear session first
-        self.http.clearCookies();
 
         url = "https://sso.three.co.uk/mylogin/?dontTestForDongleUser=true"
         + "&username=" + credentials.username
         + "&password=" + credentials.password;
-
-        //url = "https://blog.alex-miller.co/angular/2017/05/13/default-headers-in-angular.html";
-
 
         console.log('1. get login ticket');
         self.http.get(url, {}, self.headers)
@@ -172,19 +175,19 @@ export class ThreewsProvider {
                     })
                   .catch(err => {
                       // something went wrong
-                      console.log('2. error: ' + err)
-                      reject({type:'nonetwork', full: 'Log in to 3 site with the login ticket failed'});
+                      console.log('2. error: ' + err.error)
+                      reject({type:'nonetwork', full: 'Log in to 3 site with the login ticket failed' + err.error});
                   });
               } else if (data && data.indexOf("You have been logged in successfully.") > 0) {
-                reject({type:'restart', full:'3 response contains "You have been logged in successfully." - restarting.'}); //maybe wrong session
+                reject({type:'restart', full:'3 response contains "You have been logged in successfully." - restart.'}); //maybe wrong session
               } else {
-                reject({type:'nonetwork', full:'Login ticket in the response from 3 is not available as name="lt" value='});
+                reject({type:'nonetwork', full:'Login ticket in the response from 3 is not available as name="lt" value=, it si possible Three changed their services'});
               }
             })
             .catch( err => {
               // something went wrong
-              console.log('1. error: ' + err)
-              reject({type:'nonetwork', full:'Getting login ticket from 3 failed: ' + err});
+              console.log('1. error: ' + err.error)
+              reject({type:'nonetwork', full:'Getting login ticket from 3 failed: ' + err.error});
             });
       }
     });
@@ -210,12 +213,12 @@ export class ThreewsProvider {
             if (json.credit && json.credit.total && json.credit.total != "") {
               resolve(json);
             } else {
-              reject({type:'retrievefailure', full: 'Seamless response does not contain expected format'});
+              reject({type:'retrievefailure', full: 'Seamless response does not contain expected format, it si possible Three changed their services'});
             }
           })
           .catch( err => {
             // something went wrong
-            reject({type:'nonetwork', full: 'Could not connect to http://mobile.three.co.uk/account/my3/accountp'});
+            reject({type:'nonetwork', full: 'Could not connect to http://mobile.three.co.uk/account/my3/accountp' + err.error});
           });
       }
 
@@ -245,24 +248,24 @@ export class ThreewsProvider {
                 if (json.credit && json.credit.total && json.credit.total != "") {
                   resolve(json);
                 } else {
-                  reject({type:'retrievefailure', full:'Balance not in expected format (using SSO ticket)'});
+                  reject({type:'retrievefailure', full:'Balance not in expected format (using SSO ticket), it si possible Three changed their services'});
                 }
               })
               .catch( err => {
                 // something went wrong
-                console.log('4. error: ' + err)
-                reject({type:'nonetwork', full: 'Could not get balance with SSO ticket'});
+                console.log('4. error: ' + err.error)
+                reject({type:'nonetwork', full: 'Could not get balance with SSO ticket. ' + err.error});
               });
           } else {
             //console.log(data);
             console.log('3. error: no SSO ticket')
-            reject({type:'nossoticket', full:'SSO ticket response does not contain &ticket='});
+            reject({type:'nossoticket', full:'SSO ticket response does not contain &ticket=, it si possible Three changed their services'});
           }
         })
         .catch( err => {
           // something went wrong
-          console.log('3. error: ' + err)
-          reject({type:'nonetwork', full:'Could not get SSO ticket'});
+          console.log('3. error: ' + err.error)
+          reject({type:'nonetwork', full:'Could not get SSO ticket. ' + err.error});
         });
 
     });

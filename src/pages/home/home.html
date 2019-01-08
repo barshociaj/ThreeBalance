@@ -1,22 +1,16 @@
 <ion-header>
   <ion-navbar>
     <ion-title>My Three Phone Numbers</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="addUser()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <!--
-  <ion-list>
-    <ion-item *ngFor="let phone of phones" type="item-text-wrap" (click)="viewPhone({{phone.id}})">
-      {{phone.user}}
-    </ion-item>
-  </ion-list>
-  <ion-list>
-    <ion-item ng-repeat="phone in phones track by phone.id" type="item-text-wrap" (click)="viewPhone({{phone.id}})">
-      {{phone.user}}
-    </ion-item>
-  </ion-list>
--->
+
 <ion-list>
   <button ion-item *ngFor="let phone of phonesprovider.phones" (click)="viewPhone(phone.id)">
     {{phone.user}}

@@ -18,7 +18,6 @@ import { LocalstorageProvider } from '../providers/localstorage/localstorage';
 import { PhonesProvider } from '../providers/phones/phones';
 import { ThreewsProvider } from '../providers/threews/threews';
 import { SessionProvider } from '../providers/session/session';
-import { CalllogProvider } from '../providers/calllog/calllog';
 import { NlsProvider } from '../providers/nls/nls';
 
 @NgModule({
@@ -54,7 +53,6 @@ import { NlsProvider } from '../providers/nls/nls';
     PhonesProvider,
     ThreewsProvider,
     SessionProvider,
-    CalllogProvider,
     NlsProvider,
     HTTP
   ]
