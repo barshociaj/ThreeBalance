@@ -1,4 +1,6 @@
-# ThreeBalance
+# ThreeBalance 
+
+## This repository is archived and the application is no longer active
 
 The Application retrieves UK's 3 operator PAYG balance (3-2-1) over an internet connection. Supports multiple numbers.
 
